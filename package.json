@@ -1,0 +1,18 @@
+{
+  "name": "toefl_test",
+  "version": "1.0.0",
+  "description": "website to test the speaking section of a TOEFL test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Silas dos Santos Vergilio",
+  "license": "MIT",
+  "dependencies": {
+    "file-saver": "^2.0.1",
+    "green-audio-player": "^1.0.3",
+    "howler": "^2.1.1",
+    "jszip": "^3.2.1",
+    "materialize-css": "^1.0.0"
+  }
+}
