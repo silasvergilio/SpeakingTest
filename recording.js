@@ -9,7 +9,7 @@ var mediaConstraints = {
 };
 
 let mics = document.querySelectorAll('.mic');
-
+/*
 for(mic of mics)
 {
     mic.onclick = function() 
@@ -21,6 +21,8 @@ for(mic of mics)
 
     
 }
+*/
+
 /*
 document.querySelector('#save-recording').onclick = function() {
     this.disabled = true;
@@ -29,43 +31,52 @@ document.querySelector('#save-recording').onclick = function() {
 };
 */
 
+/*
 
+function startsWith(wordToCompare) {
+    return function(element) {
+        return element.indexOf(wordToCompare) === 0;
+    }
+}
+
+*/
 
 var mediaRecorder;
 
-function onMediaSuccess(stream) {
+function onMediaSuccess(name,timeAnswer,classe,stream) 
+{
 
-    var timeInterval = 5000;
-    seconds = 5;
+    seconds = timeAnswer;
+
     let clocks = document.getElementsByClassName("clock");
     for(clock of clocks)
     {
         clock.innerHTML = seconds > 9 ? `0:${seconds}` : `0:0${seconds}`;
     }
+
     var myTimer = setInterval(updateClock, 1000);
 
     let _mics = document.querySelectorAll('.mic');
 
+
+
+    
     for(mic of _mics)
     {
         let nameId;
         let transmissionClass;
-        if(mic.disabled) 
-        {
-        nameId = mic.id;
-        if(nameId == 'exercise-1')  transitionClass = '.transition-1'
-        else if(nameId == 'exercise-2') transitionClass = '.transition-2'
-        else if(nameId == 'exercise-3') transitionClass = '.transition-3'
+  
+
+        let _transitions = document.querySelectorAll(classe);
         
-        let _transitions = document.querySelectorAll(transitionClass);
         for(transition of _transitions)
         {
             transition.classList.remove('scale-out');
             transition.classList.add('scale-in');
         }
      
-        }
     }
+    
 
     mediaRecorder = new MediaStreamRecorder(stream);
     mediaRecorder.stream = stream;
@@ -79,59 +90,41 @@ function onMediaSuccess(stream) {
 
 
     //Event for when data is available, the recording has stopped
-    mediaRecorder.start(timeInterval);
+    mediaRecorder.start(seconds*1000);
 
+    
     mediaRecorder.ondataavailable = function(blob) {
-        
-
+    
         clearInterval(myTimer);
 
         let _mics = document.querySelectorAll('.mic');
 
         for(mic of _mics)
         {
-            let nameId;
-            let transmissionClass;
-            if(mic.disabled) 
-            {
-            nameId = mic.id;
-            if(nameId == 'exercise-1')  transitionClass = '.transition-1'
-            else if(nameId == 'exercise-2') transitionClass = '.transition-2'
-            else if(nameId == 'exercise-3') transitionClass = '.transition-3'
             
-            let _transitions = document.querySelectorAll(transitionClass);
+            let _transitions = document.querySelectorAll(classe);
+            
             for(transition of _transitions)
             {
                 transition.classList.remove('scale-in');
                 transition.classList.add('scale-out');
             }
          
-            }
         }
+        
+        
 
-        Materialize.toast('Fim da gravação!', 2000) // 4000 is the duration of the toast
+        Materialize.toast('Fim da gravação!', 2000) // 2000 is the duration of the toast
 
        // window.alert("Fim da gravação"); //Alerts that a new file is ready
         mediaRecorder.stop(); //Stop the recording
         mediaRecorder.stream.stop(); //Stop the stream of data
 
-        let mics = document.querySelectorAll('.mic');
-
-        for(mic of mics)
-        {
-            if(mic.disabled) {
-                var name = mic.id;
-                mic.disabled = false;
-            }
-        }
 
 
         zip.file(`${name}.wav`,blob); //Zips the file 
 
     };
-    
-   
-   
     
 }
 

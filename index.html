@@ -36,6 +36,7 @@ based on
     </head>
 
     <body>
+        
         <style>
         article {
         display: block;
@@ -89,116 +90,43 @@ based on
 
             <header style="text-align: center;"></header>
 
-            <div style = "border: 2px solid red;  border-radius: 15px;padding-left:15px; padding-right: 15px">
-                <blockquote><b>Exercise One</b></blockquote>
 
-                <section class="experiment center">
-                    <div id="audios-container"></div>
-                    <div class="exercise-1" style = "max-width: 30px">
-                        
-                        <audio >
-                            <source src="./Sounds/question1.mp3" type="audio/mpeg">
-                        </audio>
-                    </div>  
-                </section>
+            <div id="app" >
 
-                <section class="experiment" style="padding: 5px;">    
+                <exercise
+                title = "Exercise One"
+                name = "exercise-1"
+                source = "./Sounds/question1.mp3"
+                question = "What does Andi choose for his main course ?"
+                :seconds = 10
+                :has-sound = true
+                ></exercise>
 
-                <div id="flow-text-demo" class="card-panel" style = "width:device-width">
-                    <p class="flow-text">What does Andi choose for his main course ?</p>
-                </div>
+                <br> 
 
-                    <br>
+                <exercise
+                title = "Exercise Two"
+                name = "exercise-2"
+                source = ""
+                question = "What does Andi choose for his dessert ?"
+                :seconds = 10
+                :has-sound = false
+                ></exercise>
 
-                    <div class="row">
-
-                        <div class="col s6">
-
-                            <a id="exercise-1" class="btn-floating btn-large mic waves-effect waves-light red btn"><i class="material-icons right">mic</i>REC</a>
-
-                        </div>
-
-                        <div class="col s6">
-                            
-                            <blockquote class = "clock transition-1 scale-transition scale-out"> 
-                                0:05
-                            </blockquote>
-                            
-                        </div>
-                    </div>
-                        
-                    <div class = "progress transition-1 scale-transition scale-out">
-                        <div class = " indeterminate"></div>
-                    </div>
-                                                                
-                </section>
-            </div>
-            
-            <br>
-            
-            
-                <div style = "border: 2px solid red;  border-radius: 15px;padding-left:20px; padding-right: 20px" >
-                    <blockquote><b>Exercise Two</b></blockquote>
-
-                <section class="experiment" style="padding: 5px;">
-                   
-                        <div class="row">
-
-                                <div id="flow-text-demo" class="card-panel" style = "width:device-width">
-                                        <p class="flow-text">What does Andi choose for his dessert ?</p>
-                                </div>
-
-                                <div class="col s6">
-                                    <a id="exercise-2" class="mic btn-floating btn-large waves-effect waves-light red"><i class="material-icons right">mic</i></a>
-                                </div>
-
-                                <div class="col s6">
-                                    <blockquote class = "clock transition-2 scale-transition scale-out"> 
-                                        0:05
-                                    </blockquote>        
-                                </div>
-                        </div>
-
-                        <div class = "progress transition-2 scale-transition scale-out">
-                                <div class = " indeterminate"></div>
-                        </div>
-                    
-                </section>
-            </div>        
-
-            <br>
-
-            <div style = "border: 2px solid red;  border-radius: 15px;padding-left:20px; padding-right: 20px" >
-                <blockquote><b>Exercise Three</b></blockquote>
-
-
-                <div id="flow-text-demo" class="card-panel" style = "width:device-width">
-                        <p class="flow-text">What does Andi choose to drink ?</p>
-                </div>
-        
-            <section class="experiment" style="padding: 5px;">
                 <br>
-                    <div class="row">
 
-                            <div class="col s6">
-                                <a id="exercise-3" class="mic btn-floating btn-large waves-effect waves-light red"><i class="material-icons right">mic</i></a>
-                            </div>
+                <exercise
+                title = "Exercise Three"
+                name = "exercise-3"
+                source = ""
+                question = "What does Andi choose to drink ?"
+                :seconds = 10
+                :has-sound = false
+                ></exercise>
 
-                            <div class="col s6">
-                                <blockquote class = "clock transition-3 scale-transition scale-out"> 
-                                    0:05
-                                </blockquote>        
-                            </div>
-                    </div>
+            </div> <!-- Fim da Id = app-->
 
-                    <div class = "progress transition-3 scale-transition scale-out">
-                            <div class = " indeterminate"></div>
-                    </div>
-                
-            </section>
-        </div>        
-
-        <br>
+            <br>
 
             <div style = "margin: auto;" class="center container">
 
@@ -237,14 +165,6 @@ based on
     <!-- Green Audio Player JS-->
     <script src="./node_modules/green-audio-player/dist/js/green-audio-player.js"></script>
 
-    <!-- Script to initialize the sound elements-->
-    <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                new GreenAudioPlayer('.exercise-1');
-            });
-
-
-    </script>
 
      <!--Script para inicializar jquery necessário para o uso do componente select do Materialize-->
     <script type="text/javascript">
@@ -254,6 +174,59 @@ based on
         });
         }
     </script>
+
+    <!-- Templates usados no Vue.js-->
+
+    <script type="text/x-template" id="exercise-template">
+        <div style = "border: 2px solid red;  border-radius: 15px;padding-left:15px; padding-right: 15px">
+                <blockquote><b>{{title}}</b></blockquote>
+
+                <section v-if = 'hasSound' class="experiment center">
+                    <div :class= "name"  style = "max-width: 50px">  
+                        <audio>
+                            <source :src = "source" type="audio/mpeg">
+                        </audio>
+                    </div>  
+                </section>
+
+                <section class="experiment" style="padding: 5px;">    
+
+                <div id="flow-text-demo" class="card-panel" style = "width:device-width">
+                    <p class="flow-text">{{question}}</p>
+                </div>
+            <br>
+
+            <div class="row">
+
+                    <div class="col s6">
+
+                        <a @click="recordMethod" :id="name" class="btn-floating btn-large mic waves-effect waves-light red btn"><i class="material-icons right">mic</i>REC</a>
+
+                    </div>
+
+                    <div class="col s6">
+                        
+                        <blockquote :class="['clock', `${name}-class` ,'scale-transition', 'scale-out']"> 
+                            
+                        </blockquote>
+                        
+                    </div>
+                </div>
+                    
+                <div :class = "['progress', `${name}-class`, 'scale-transition', 'scale-out']">
+                    <div class = " indeterminate"></div>
+                </div>
+                                                            
+            </section>
+            <br>
+
+        </div>
+        
+        
+
+    </script>
+
+    <!-- Fim dos Templates para o Vue.js-->
 
     <!-- Imports File Saver to save the file to the disk-->
     <script type="text/javascript" src="./node_modules/file-saver/dist/FileSaver.js"></script>
@@ -269,13 +242,19 @@ based on
     <!-- CDN de JS para Media Stream Recorder-->
     <script src="https://cdn.WebRTC-Experiment.com/MediaStreamRecorder.js"></script>
 
-    <!-- Imports the recording.js to record the students audio -->
-    <script src="./recording.js"></script>
-
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+     <!-- Imports the recording.js to record the students audio -->
+     <script src="./recording.js"></script>
+
+    <!-- Imports the recording.js to record the students audio -->
+    <script src="./index.js"></script>
+
+   
+
 
 </body>
 
