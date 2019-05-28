@@ -9,37 +9,7 @@ var mediaConstraints = {
 };
 
 let mics = document.querySelectorAll('.mic');
-/*
-for(mic of mics)
-{
-    mic.onclick = function() 
-    {
-        this.disabled = true;
-        
-        captureUserMedia(mediaConstraints, onMediaSuccess, onMediaError);
-    };
 
-    
-}
-*/
-
-/*
-document.querySelector('#save-recording').onclick = function() {
-    this.disabled = true;
-    mediaRecorder.save();
-    // alert('Drop WebM file on Chrome or Firefox. Both can play entire file. VLC player or other players may not work.');
-};
-*/
-
-/*
-
-function startsWith(wordToCompare) {
-    return function(element) {
-        return element.indexOf(wordToCompare) === 0;
-    }
-}
-
-*/
 
 var mediaRecorder;
 
@@ -59,13 +29,11 @@ function onMediaSuccess(name,timeAnswer,classe,stream)
     let _mics = document.querySelectorAll('.mic');
 
 
-
-    
     for(mic of _mics)
     {
         let nameId;
         let transmissionClass;
-  
+        mic.disabled = true;
 
         let _transitions = document.querySelectorAll(classe);
         
@@ -77,7 +45,6 @@ function onMediaSuccess(name,timeAnswer,classe,stream)
      
     }
     
-
     mediaRecorder = new MediaStreamRecorder(stream);
     mediaRecorder.stream = stream;
     
@@ -139,7 +106,8 @@ function updateClock()
 }
 
 function onMediaError(e) {
-    console.error('media error', e);
+   // console.error('media error', e);
+   window.alert('Microfone Não Encontrado ou Habilitado')
 }
 
 

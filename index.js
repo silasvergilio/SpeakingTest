@@ -4,6 +4,7 @@
 
   Vue.component('exercise', {
     template: '#exercise-template',
+
     props: {
       name: {
         type: String,
@@ -31,6 +32,24 @@
       }
     },
 
+    data: function()
+    {
+      return {
+        dis: false
+      }
+    },
+
+    computed: {
+        disableButton: {
+            get: function(){
+                return this.dis;
+            },
+            set: function(state){
+                this.dis = state;
+            }   
+        }
+      },
+
     mounted: function () {
 
       if(this.hasSound){
@@ -41,10 +60,13 @@
 
     methods: {
 
+
         recordMethod: function() {
 
+          this.disableButton = true;
+          
+          captureUserMedia(mediaConstraints, onMediaSuccess.bind(this,this.name,this.seconds,`.${this.name}-class`), onMediaError);
 
-        captureUserMedia(mediaConstraints, onMediaSuccess.bind(this,this.name,this.seconds,`.${this.name}-class`), onMediaError);
 
         },
     }
