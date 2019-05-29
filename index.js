@@ -63,7 +63,7 @@
 
         recordMethod: function() {
 
-          this.disableButton = true;
+         // this.disableButton = true;
           
           captureUserMedia(mediaConstraints, onMediaSuccess.bind(this,this.name,this.seconds,`.${this.name}-class`), onMediaError);
 
