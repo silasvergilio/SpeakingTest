@@ -65,7 +65,7 @@ function onMediaSuccess(name,timeAnswer,classe,stream)
     mediaRecorder.ondataavailable = function(blob) {
     
         micButton = document.getElementById(name).classList.remove('disabled');
-a
+
         clearInterval(myTimer);
 
         let _mics = document.querySelectorAll('.mic');
